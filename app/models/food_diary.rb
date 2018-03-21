@@ -1,0 +1,3 @@
+class FoodDiary < ApplicationRecord
+    
+end

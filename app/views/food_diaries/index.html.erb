@@ -1,0 +1,92 @@
+<h1>Food Diary Details</h1>
+
+<div>
+Break Fast:  <%= @breakfast %>
+</div>
+<div>
+Lunch     : <%= @lunch %>
+</div>
+<div>
+Dinner    :  <%= @dinner %>
+</div>
+<br>
+
+
+<%= form_with(model: @food_diary, local: true) do |form| %>
+    <div class="field">
+        <%= form.label :date_consumed %>
+        <%= form.date_select :date_consumed, id: :food_diary_date_consumed %>    
+    </div>
+
+     <div class="field">
+        <%= form.label :category %>
+        <%= form.select(:category, id: :food_diary_category) do %>
+            <% ['lunch', 'breakfast', 'dinner'].each do |cat| %>
+                <%= content_tag(:option, cat, value: cat, selected: @food_diary.category == cat) %>
+            <% end %>
+        <% end %>
+    </div>
+
+    <div class="field">
+        <%= form.label :name %>
+        <%= form.text_field :name, id: :food_diary_name %>    
+    </div>
+
+    <div class="field">
+        <%= form.label :no_of_servings %>
+        <%= form.number_field :no_of_servings, id: :food_diary_no_of_servings %>
+    </div>
+
+    <div class="field">
+        <%= form.label :cal_per_servings %>
+        <%= form.number_field :cal_per_servings, id: :food_diary_cal_per_servings %>
+
+    </div>
+
+
+    
+
+
+    <div class="field">
+        <%= form.submit %>
+    </div>
+<% end %>
+
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>id</th>
+            <th>date</th>
+            <th>category</th>            
+            <th>name</th>
+            <th># of servings</th>
+            <th># calories per servings</th>
+            <th>total calories</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @food_diaries.each do |t| %>
+            <tr>
+               <td>
+                    <%= link_to('edit', edit_food_diary_path(t)) %>
+
+                </td>
+                <td>
+                    delete
+                    </td>
+                    
+                <td><%= t.id %></td>
+                <td><%= t.date_consumed %></td>
+                <td><%= t.category %></td>                
+                <td><%= t.name %></td>
+                <td><%= t.no_of_servings %></td>
+                <td><%= t.cal_per_servings %></td>
+                <td><%= t.cal_per_servings * t.no_of_servings %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
